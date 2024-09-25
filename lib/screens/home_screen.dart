@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import 'package:weather_app/models/weather_model.dart';
 import 'package:weather_app/services/get_weather_api.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';
@@ -69,7 +70,9 @@ class _HomeScreenState extends State<HomeScreen> {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text(weatherData!.cityName),
+                          Text(weatherData!.cityName,
+                              style: Theme.of(context).textTheme.headlineLarge),
+                          Lottie.asset('assets/animations/sunny.json'),
                           Text(weatherData!.mainCondition),
                           Text(weatherData!.temperature.toString())
                         ],
