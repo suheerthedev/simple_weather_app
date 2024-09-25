@@ -26,10 +26,10 @@ class MyApp extends StatelessWidget {
                 TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             headlineSmall: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           )),
-      home: const HomeScreen(),
+      home: const SplashScreen(),
       routes: {
-        'splashScreen': (context) => const SplashScreen(),
-        'homeScreen': (context) => const HomeScreen(),
+        '/splashScreen': (context) => const SplashScreen(),
+        '/homeScreen': (context) => const HomeScreen(),
       },
     );
   }

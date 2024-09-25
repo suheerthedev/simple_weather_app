@@ -14,7 +14,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    Timer(const Duration(seconds: 2), () {
+    Timer(const Duration(seconds: 5), () {
       Navigator.pushReplacementNamed(context, '/homeScreen');
     });
   }
@@ -26,7 +26,9 @@ class _SplashScreenState extends State<SplashScreen> {
           child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          SvgPicture.asset('assets/images/weatherapplogo.svg'),
+          SizedBox.square(
+              dimension: 200,
+              child: SvgPicture.asset('assets/images/weatherapplogo.svg')),
         ],
       )),
     );

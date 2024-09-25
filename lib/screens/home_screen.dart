@@ -97,28 +97,46 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-          child: isLoading
-              ? const CircularProgressIndicator()
-              : weatherData != null
-                  ? Expanded(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(weatherData!.cityName,
-                              style: Theme.of(context).textTheme.headlineLarge),
-                          Lottie.asset(
-                              getWeatherAnimation(weatherData!.mainCondition)),
-                          Text(weatherData!.mainCondition,
-                              style: Theme.of(context).textTheme.headlineSmall),
-                          const SizedBox(height: 5),
-                          Text("${weatherData!.temperature.toString()} °C",
-                              style: Theme.of(context).textTheme.headlineMedium)
-                        ],
-                      ),
-                    )
-                  : const Text(
-                      "Enter a country/state/city to get the weather")),
+      body: SafeArea(
+        child: Center(
+            child: isLoading
+                ? const CircularProgressIndicator()
+                : weatherData != null
+                    ? Expanded(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Expanded(
+                              flex: 1,
+                              child: SizedBox(),
+                            ),
+                            const Icon(Icons.location_on, size: 18),
+                            Text(weatherData!.cityName,
+                                style:
+                                    Theme.of(context).textTheme.headlineLarge),
+                            Expanded(
+                              flex: 1,
+                              child: SizedBox(),
+                            ),
+                            Lottie.asset(getWeatherAnimation(
+                                weatherData!.mainCondition)),
+                            Text(weatherData!.mainCondition,
+                                style:
+                                    Theme.of(context).textTheme.headlineSmall),
+                            const SizedBox(height: 5),
+                            Text("${weatherData!.temperature.toString()} °C",
+                                style:
+                                    Theme.of(context).textTheme.headlineMedium),
+                            Expanded(
+                              flex: 2,
+                              child: SizedBox(),
+                            ),
+                          ],
+                        ),
+                      )
+                    : const Text(
+                        "Enter a country/state/city to get the weather")),
+      ),
       floatingActionButton: Padding(
         padding: const EdgeInsets.only(left: 24.0),
         child: Row(
@@ -130,7 +148,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 controller: cityCont,
                 decoration: InputDecoration(
                     hintText: "Enter Location (City, State, or Country)",
-                    hintStyle: TextStyle(
+                    hintStyle: const TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.normal,
                         color: Colors.white54),
@@ -150,7 +168,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 onPressed: fetchWeather,
                 backgroundColor: Colors.white,
                 child: const Icon(
-                  Iconsax.search_normal,
+                  Iconsax.search_normal_copy,
                   color: Colors.black,
                 ),
               ),
