@@ -5,8 +5,7 @@ import 'package:weather_app/services/get_weather_api.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key, required this.title});
-  final String title;
+  const HomeScreen({super.key});
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -31,6 +30,7 @@ class _HomeScreenState extends State<HomeScreen> {
   //Function to fetch weather data
   Future<void> fetchWeather() async {
     String cityName = cityCont.text.trim();
+    cityCont.clear();
 
     if (cityName.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -59,6 +59,41 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
+  //weather animation
+  String getWeatherAnimation(String? mainCondition) {
+    if (mainCondition == null) return 'assets/animations/atmosphere.json';
+
+    switch (mainCondition.toLowerCase()) {
+      case 'mist':
+      case 'smoke':
+      case 'haze':
+      case 'dust':
+      case 'fog':
+      case 'sand':
+      case 'ash':
+      case 'squall':
+      case 'tornado':
+        return 'assets/animations/atmosphere.json';
+      case 'clouds':
+        return 'assets/animations/clouds.json';
+      case 'drizzle':
+        return 'assets/animations/drizzle.json';
+      case 'rain':
+      case 'shower rain':
+        return 'assets/animations/rain.json';
+      case 'snow':
+        return 'assets/animations/snow.json';
+      case 'sunny':
+        return 'assets/animations/sunny.json';
+      case 'clear':
+        return 'assets/animations/sunny.json';
+      case 'thunderstorm':
+        return 'assets/animations/thunder.json';
+      default:
+        return 'assets/animations/sunny.json';
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -72,31 +107,56 @@ class _HomeScreenState extends State<HomeScreen> {
                         children: [
                           Text(weatherData!.cityName,
                               style: Theme.of(context).textTheme.headlineLarge),
-                          Lottie.asset('assets/animations/sunny.json'),
-                          Text(weatherData!.mainCondition),
-                          Text(weatherData!.temperature.toString())
+                          Lottie.asset(
+                              getWeatherAnimation(weatherData!.mainCondition)),
+                          Text(weatherData!.mainCondition,
+                              style: Theme.of(context).textTheme.headlineSmall),
+                          const SizedBox(height: 5),
+                          Text("${weatherData!.temperature.toString()} °C",
+                              style: Theme.of(context).textTheme.headlineMedium)
                         ],
                       ),
                     )
-                  : const Text("Enter a city to get the weather")),
-      floatingActionButton: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          SizedBox(
-            width: 300,
-            child: TextField(
-              controller: cityCont,
-              decoration: const InputDecoration(
-                  hintText: "Enter City Name",
-                  contentPadding: EdgeInsets.symmetric(horizontal: 25)),
+                  : const Text(
+                      "Enter a country/state/city to get the weather")),
+      floatingActionButton: Padding(
+        padding: const EdgeInsets.only(left: 24.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            SizedBox(
+              width: 275,
+              child: TextField(
+                controller: cityCont,
+                decoration: InputDecoration(
+                    hintText: "Enter Location (City, State, or Country)",
+                    hintStyle: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.normal,
+                        color: Colors.white54),
+                    contentPadding: const EdgeInsets.symmetric(horizontal: 8),
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                        borderSide: const BorderSide(color: Colors.white)),
+                    focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                        borderSide: const BorderSide(color: Colors.white))),
+              ),
             ),
-          ),
-          // const SizedBox(width: 10),
-          FloatingActionButton(
-            onPressed: fetchWeather,
-            child: const Icon(Iconsax.search_normal),
-          ),
-        ],
+            const SizedBox(width: 10),
+            SizedBox.square(
+              dimension: 50,
+              child: FloatingActionButton(
+                onPressed: fetchWeather,
+                backgroundColor: Colors.white,
+                child: const Icon(
+                  Iconsax.search_normal,
+                  color: Colors.black,
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
