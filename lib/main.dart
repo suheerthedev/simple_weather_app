@@ -11,6 +11,8 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final screenHeight = MediaQuery.of(context).size.height;
     return MaterialApp(
       title: "Weather App",
       debugShowCheckedModeBanner: false,
@@ -20,11 +22,11 @@ class MyApp extends StatelessWidget {
           appBarTheme: AppBarTheme(
               color: Colors.blue,
               titleTextStyle: Theme.of(context).textTheme.headlineLarge),
-          textTheme: const TextTheme(
-            headlineLarge: TextStyle(fontSize: 38, fontWeight: FontWeight.bold),
+          textTheme: TextTheme(
+            headlineLarge: TextStyle(fontSize: screenWidth * 0.07, fontWeight: FontWeight.bold),
             headlineMedium:
-                TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-            headlineSmall: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                TextStyle(fontSize: screenWidth * 0.06, fontWeight: FontWeight.bold),
+            headlineSmall: TextStyle(fontSize: screenWidth * 0.05, fontWeight: FontWeight.bold),
           )),
       home: const SplashScreen(),
       routes: {

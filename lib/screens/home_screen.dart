@@ -11,9 +11,12 @@ class HomeScreen extends StatefulWidget {
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
+
 class _HomeScreenState extends State<HomeScreen> {
   TextEditingController cityCont = TextEditingController();
   WeatherModel? weatherData;
+  
+
 
   bool isLoading = false; //for loading indicator
 
@@ -96,63 +99,55 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+  final screenWidth = MediaQuery.of(context).size.width;
+  final screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
       body: SafeArea(
         child: Center(
             child: isLoading
                 ? const CircularProgressIndicator()
                 : weatherData != null
-                    ? Expanded(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Expanded(
-                              flex: 1,
-                              child: SizedBox(),
-                            ),
-                            const Icon(Icons.location_on, size: 18),
-                            Text(weatherData!.cityName,
-                                style:
-                                    Theme.of(context).textTheme.headlineLarge),
-                            Expanded(
-                              flex: 1,
-                              child: SizedBox(),
-                            ),
-                            Lottie.asset(getWeatherAnimation(
-                                weatherData!.mainCondition)),
-                            Text(weatherData!.mainCondition,
-                                style:
-                                    Theme.of(context).textTheme.headlineSmall),
-                            const SizedBox(height: 5),
-                            Text("${weatherData!.temperature.toString()} °C",
-                                style:
-                                    Theme.of(context).textTheme.headlineMedium),
-                            Expanded(
-                              flex: 2,
-                              child: SizedBox(),
-                            ),
-                          ],
-                        ),
-                      )
-                    : const Text(
-                        "Enter a country/state/city to get the weather")),
+                    ? Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        SizedBox(height: screenHeight * 0.02),
+                         Icon(Icons.location_on, size: screenWidth * 0.05),
+                        Text(weatherData!.cityName,
+                            style:
+                                Theme.of(context).textTheme.headlineLarge),
+                                                    SizedBox(height: screenHeight * 0.02),
+                        Lottie.asset(getWeatherAnimation(
+                            weatherData!.mainCondition), width: screenWidth*0.6),
+                        Text(weatherData!.mainCondition,
+                            style:
+                                Theme.of(context).textTheme.headlineSmall),
+                        const SizedBox(height: 5),
+                        Text("${weatherData!.temperature.toString()} °C",
+                            style:
+                                Theme.of(context).textTheme.headlineMedium),
+                                                    SizedBox(height: screenHeight * 0.1),
+                      ],
+                    )
+                    :  Text(
+                        "Enter a country/state/city to get the weather",
+                        style: TextStyle(fontSize: screenWidth * 0.04),)),
       ),
       floatingActionButton: Padding(
-        padding: const EdgeInsets.only(left: 24.0),
+        padding:  EdgeInsets.only(left: screenWidth * 0.05),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             SizedBox(
-              width: 275,
+              width: screenWidth * 0.8,
               child: TextField(
                 controller: cityCont,
                 decoration: InputDecoration(
                     hintText: "Enter Location (City, State, or Country)",
-                    hintStyle: const TextStyle(
-                        fontSize: 14,
+                    hintStyle:  TextStyle(
+                        fontSize: screenWidth * 0.035,
                         fontWeight: FontWeight.normal,
                         color: Colors.white54),
-                    contentPadding: const EdgeInsets.symmetric(horizontal: 8),
+                    contentPadding:  EdgeInsets.symmetric(horizontal: screenWidth * 0.02),
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10),
                         borderSide: const BorderSide(color: Colors.white)),
@@ -161,9 +156,9 @@ class _HomeScreenState extends State<HomeScreen> {
                         borderSide: const BorderSide(color: Colors.white))),
               ),
             ),
-            const SizedBox(width: 10),
+             SizedBox(width: screenWidth * 0.02),
             SizedBox.square(
-              dimension: 50,
+              dimension: screenWidth * 0.12,
               child: FloatingActionButton(
                 onPressed: fetchWeather,
                 backgroundColor: Colors.white,
